@@ -1,3 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_setup_app/cubit/home/home_cubit.dart';
+import 'package:flutter_setup_app/cubit/second/second_cubit.dart';
+import 'package:flutter_setup_app/di/dependency_container.dart';
 import 'package:flutter_setup_app/pages/home/home_page.dart';
 import 'package:flutter_setup_app/pages/second/second_page.dart';
 import 'package:sailor/sailor.dart';
@@ -10,7 +14,8 @@ class AppRouter {
       SailorRoute(
         name: Screens.SECOND_PAGE,
         builder: (context, args, params) {
-          return SecondPage();
+          return BlocProvider(
+              create: (context) => di<SecondCubit>(), child: SecondPage());
         },
       ),
     );
@@ -18,7 +23,8 @@ class AppRouter {
       SailorRoute(
         name: Screens.HOME_PAGE,
         builder: (context, args, params) {
-          return HomePage();
+          return BlocProvider(
+              create: (context) => di<HomeCubit>(), child: HomePage());
         },
       ),
     );

@@ -3,12 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_setup_app/common/navigator.dart';
 import 'package:flutter_setup_app/cubit/home/home_cubit.dart';
+import 'package:flutter_setup_app/di/dependency_container.dart';
 import 'package:flutter_setup_app/pages/home/home_page.dart';
 
+import '../di/dependency_container.dart' as diFactory;
 import '../locale/app_localization.dart';
 
-void main() {
+void main() async {
+  //init dependency injection
+  await diFactory.init();
+  //init routes
   AppRouter.createRoutes();
+  //launch app
   runApp(Application());
 }
 
@@ -48,7 +54,7 @@ class Application extends StatelessWidget {
       navigatorKey: AppRouter.instance.navigatorKey,
       onGenerateRoute: AppRouter.instance.generator(),
       home: BlocProvider(
-        create: (context) => HomeCubit(InitialHomeState()),
+        create: (context) => di<HomeCubit>(),
         child: HomePage(),
       ),
     );

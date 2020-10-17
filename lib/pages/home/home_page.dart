@@ -7,7 +7,7 @@ import 'package:flutter_setup_app/locale/app_localization.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    HomeCubit cubit = context.bloc<HomeCubit>();
+    // var cubit = di<HomeCubit>();
     return Scaffold(
       appBar: AppBar(
         title: Text(context.getString("home_page_title")),
@@ -37,13 +37,13 @@ class HomePage extends StatelessWidget {
               FlatButton(
                 color: Colors.green,
                 onPressed: () {
-                  cubit.paintGreen();
+                  BlocProvider.of<HomeCubit>(context).paintGreen();
                 },
               ),
               FlatButton(
                 color: Colors.red,
                 onPressed: () {
-                  cubit.paintRed();
+                  BlocProvider.of<HomeCubit>(context).paintRed();
                 },
               ),
               RaisedButton(

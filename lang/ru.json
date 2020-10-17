@@ -1,6 +1,6 @@
 {
-  "app_name": "Тестовое приложение",
   "home_page_title": "Главная страница",
   "home_page_navigate": "Перейти",
-  "second_page_title": "Вторая страница"
+  "second_page_title": "Вторая страница",
+  "second_page_get_users": "Получить пользователей"
 }
