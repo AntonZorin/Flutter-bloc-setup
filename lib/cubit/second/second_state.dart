@@ -13,4 +13,8 @@ class LoadedSecondState extends SecondState {
   LoadedSecondState({this.users});
 }
 
-class ErrorSecondState extends SecondState {}
+class ErrorSecondState extends SecondState {
+  final String message;
+
+  ErrorSecondState(this.message);
+}

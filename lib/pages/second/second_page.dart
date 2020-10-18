@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_setup_app/cubit/second/second_cubit.dart';
+import 'package:flutter_setup_app/presentation/model/user.dart';
 
 import '../../locale/app_localization.dart';
 
@@ -19,25 +20,22 @@ class SecondPage extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: 300,
-                width: double.infinity,
-                child: BlocBuilder<SecondCubit, SecondState>(
-                  builder: (BuildContext context, state) {
-                    if (state is InitialSecondState) {
-                      return _buildInitState();
-                    } else if (state is LoadingSecondState) {
-                      return _buildLoadingState();
-                    } else if (state is LoadedSecondState) {
-                      return _buildLoadedState();
-                    } else {
-                      return Center(
-                        child: Text("else"),
-                      );
-                    }
-                  },
-                ),
+              BlocBuilder<SecondCubit, SecondState>(
+                builder: (BuildContext context, state) {
+                  if (state is InitialSecondState) {
+                    return _buildInitState();
+                  } else if (state is LoadingSecondState) {
+                    return _buildLoadingState();
+                  } else if (state is LoadedSecondState) {
+                    return _buildLoadedState(context, state.users);
+                  } else {
+                    return Center(
+                      child: Text("else"),
+                    );
+                  }
+                },
               ),
               RaisedButton(
                 child: Text(context.getString("second_page_get_users")),
@@ -50,20 +48,32 @@ class SecondPage extends StatelessWidget {
   }
 
   Widget _buildInitState() {
-    return Center(
-      child: Text("Initial"),
+    return Expanded(
+      child: Center(
+        child: Text("Initial"),
+      ),
     );
   }
 
   Widget _buildLoadingState() {
-    return Center(
-      child: Text("Loading"),
+    return Expanded(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
-  Widget _buildLoadedState() {
-    return Center(
-      child: Text("Loaded"),
+  Widget _buildLoadedState(BuildContext context, List<User> users) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: users.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(users[index].username),
+            leading: Icon(Icons.account_circle),
+          );
+        },
+      ),
     );
   }
 }
